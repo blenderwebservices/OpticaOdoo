@@ -195,6 +195,28 @@ class OrderResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('syncToOdoo')
+                    ->label('Enviar a Odoo (SO)')
+                    ->icon('heroicon-o-cloud-arrow-up')
+                    ->color('success')
+                    ->action(function (Order $record) {
+                        $odooService = app(\App\Services\OdooService::class);
+                        $res = $odooService->createSaleOrder($record);
+
+                        if ($res['success'] ?? false) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Enviado a Odoo API')
+                                ->body($res['message'] ?? 'Orden de Venta creada exitosamente.')
+                                ->success()
+                                ->send();
+                        } else {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Error en Sincronización')
+                                ->body($res['error'] ?? 'Ocurrió un inconveniente.')
+                                ->danger()
+                                ->send();
+                        }
+                    }),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

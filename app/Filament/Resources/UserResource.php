@@ -99,6 +99,22 @@ class UserResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('syncToOdoo')
+                    ->label('Sincronizar a Odoo')
+                    ->icon('heroicon-o-user-plus')
+                    ->color('info')
+                    ->action(function (User $record) {
+                        $odooService = app(\App\Services\OdooService::class);
+                        $res = $odooService->createCustomer($record);
+
+                        if ($res['success'] ?? false) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Cliente Creado en Odoo')
+                                ->body($res['message'] ?? 'Contacto res.partner registrado.')
+                                ->success()
+                                ->send();
+                        }
+                    }),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
