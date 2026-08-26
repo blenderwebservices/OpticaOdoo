@@ -3,6 +3,10 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Widgets\LatestAppointmentsWidget;
+use App\Filament\Widgets\OdooCompaniesWidget;
+use App\Filament\Widgets\OdooInstalledAppsWidget;
+use App\Filament\Widgets\OdooStatusWidget;
+use App\Filament\Widgets\OdooSyncStatsWidget;
 use App\Filament\Widgets\SalesChartWidget;
 use App\Filament\Widgets\StatsOverviewWidget;
 use Filament\Http\Middleware\Authenticate;
@@ -40,9 +44,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                StatsOverviewWidget::class,
+                OdooStatusWidget::class,
+                OdooSyncStatsWidget::class,
+                OdooCompaniesWidget::class,
                 SalesChartWidget::class,
                 LatestAppointmentsWidget::class,
+                OdooInstalledAppsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

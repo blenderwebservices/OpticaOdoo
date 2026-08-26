@@ -22,6 +22,7 @@ class OdooSyncPage extends Page
     protected static string $view = 'filament.pages.odoo-sync-page';
 
     public array $connectionStatus = [];
+    public array $companyInfo = [];
     public array $recentInvoices = [];
 
     public function mount(OdooService $odooService)
@@ -32,8 +33,9 @@ class OdooSyncPage extends Page
 
     public function testConnection(OdooService $odooService)
     {
-        $res = $odooService->authenticate();
-        $this->connectionStatus = $res;
+        $this->connectionStatus = $odooService->getConnectionDetails();
+        $comp = $odooService->getCompaniesInfo();
+        $this->companyInfo = $comp['companies'][0] ?? [];
     }
 
     public function syncCustomers(OdooService $odooService)

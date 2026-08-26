@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'odoo' => [
+        'url' => env('ODOO_URL', 'https://es-labs.odoo.com'),
+        'db' => env('ODOO_DB', 'es-labs'),
+        'api_key' => env('ODOO_API_KEY', 'f09a5fec74121a8bfbb49dc47f546723851cc5e9'),
+        'uid' => env('ODOO_UID', 5),
+        'company_name' => env('ODOO_COMPANY_NAME', 'ES VISION'),
+        'company_id' => env('ODOO_COMPANY_ID', 2),
+    ],
+
 ];
